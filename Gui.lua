@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 
-local player = Players.LocalPlayer\
+local player = Players.LocalPlayer
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "GitHubImageGui"
@@ -21,7 +21,7 @@ local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 8)
 corner.Parent = box
 
--- Main image
+-- Main image (loaded via imageLoader.lua)
 local imageLabel = Instance.new("ImageLabel")
 imageLabel.Size = UDim2.new(1, 0, 1, 0)
 imageLabel.BackgroundTransparency = 1
@@ -45,25 +45,24 @@ local corner2 = Instance.new("UICorner")
 corner2.CornerRadius = UDim.new(0, 8)
 corner2.Parent = box2
 
+-- Load image through imageLoader.lua
+task.spawn(function()
+    local loaderUrl = "https://raw.githubusercontent.com/SidedRegent133/Fling-Gui/main/imageLoader.lua"
+    local ok, result = pcall(function()
+        local loader = loadstring(game:HttpGet(loaderUrl))()
+        return loader and loader()
+    end)
+
+    if ok and result then
+        imageLabel.Image = result
+    else
+        warn("Failed to load image via imageLoader: " .. tostring(result))
+    end
+end)
+
 -- Toggle second box
 box.MouseButton1Click:Connect(function()
     box2.Visible = not box2.Visible
-end)
-
--- Download and load image
-task.spawn(function()
-    local success, err = pcall(function()
-        local imageUrl = "https://raw.githubusercontent.com/SidedRegent133/Fling-Gui/main/image.png"
-        local imageData = game:HttpGet(imageUrl)
-        local fileName = "temp_fling_image.png"
-
-        writefile(fileName, imageData)
-        imageLabel.Image = getcustomasset(fileName)
-    end)
-
-    if not success then
-        warn("Failed to load GitHub image: " .. tostring(err))
-    end
 end)
 
 -- Dragging
