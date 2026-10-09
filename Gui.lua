@@ -211,7 +211,7 @@ Players.PlayerRemoving:Connect(function()
     end
 end)
 
--- Toggle second box
+-- First box: toggle second box only, no self-fling
 box.MouseButton1Click:Connect(function()
     box2.Visible = not box2.Visible
     if not box2.Visible then
@@ -258,22 +258,5 @@ UserInputService.InputChanged:Connect(function(input)
             startPos.Y.Scale,
             startPos.Y.Offset + delta.Y
         )
-    end
-end)
-
--- Fling self
-box.MouseButton1Click:Connect(function()
-    local char = player.Character
-
-    if char and char:FindFirstChild("HumanoidRootPart") then
-        local hrp = char.HumanoidRootPart
-
-        local bv = Instance.new("BodyVelocity")
-        bv.Parent = hrp
-        bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-        bv.Velocity = Vector3.new(90000, 90000, 90000)
-
-        task.wait(0.2)
-        bv:Destroy()
     end
 end)
