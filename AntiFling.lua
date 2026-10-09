@@ -8,8 +8,8 @@ local player = Players.LocalPlayer
 
 local ENABLED = true
 local CHECK_INTERVAL = 0.1        -- seconds between checks
-local POSITION_SPIKE = 60        -- studs/sec sudden displacement = suspicious
-local SPIN_SPIKE = 100           -- sudden spin magnitude = suspicious
+local POSITION_SPIKE = 60         -- studs/sec sudden displacement = suspicious
+local SPIN_SPIKE = 100            -- sudden spin magnitude = suspicious
 local RECOVER_HEIGHT = 3         -- studs above spike position to recover to
 
 local lastCFrame: CFrame? = nil
